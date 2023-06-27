@@ -1,0 +1,715 @@
+************************************************************ postgreSQL************************************************************************
+
+-- Database: solide
+-- DROP DATABASE IF EXISTS solide;
+CREATE DATABASE solide
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'fr_FR.UTF-8'
+    LC_CTYPE = 'fr_FR.UTF-8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+	-- Création de la table Entreprise
+	
+CREATE TABLE Entreprise (
+  ID_Entreprise SERIAL PRIMARY KEY,
+  Nom_Entreprise varchar(255),
+  Adresse_Entreprise varchar(255),
+  Telephone_Entreprise varchar(20) 
+);
+
+SELECT* FROM Entreprise 
+	
+
+-- Création de la table Client
+CREATE TABLE Client (
+ ID_Client SERIAL PRIMARY KEY,
+  Nom_Client varchar(255),
+  Adresse_Client varchar(255),
+  Telephone_Client varchar(20) 
+);
+	
+	SELECT* FROM Client
+	
+	
+-- Création de la table Produit
+CREATE TABLE Produit (
+ ID_Produit SERIAL PRIMARY KEY,
+  Nom_Produit varchar(255),
+  Description_Produit text,
+  Prix_Produit decimal(10, 2)
+);	
+	
+	SELECT* FROM Produit
+	
+	
+	
+	-- Création de la table Commande
+CREATE TABLE Commande (
+  ID_Commande SERIAL PRIMARY KEY, 
+  ID_Client INT,
+  Date_Commande date,
+  Statut_Commande varchar(50),
+  PRIMARY KEY ( ID_Commande,ID_Client)
+);
+	
+	
+	SELECT* FROM Commande
+	
+	
+	
+	
+-------CREATE TABLE realisateurs(
+	
+	realisateur_id SERIAL PRIMARY KEY,
+	prenon VARCHAR(30),
+	nom VARCHAR(30) not null,
+	date_de_naissance DATE,
+	nationalite VARCHAR(20),
+);
+	SELECT * FROM realisateurs
+	SELECT * prenom FROM realisateurs;
+	SELECT * prenom, nom FROM realisateurs;
+	
+	
+------CREATE TABLE acteurs (
+
+	acteur_id SARIAL PRIMARY KEY,
+	prenom varchar(),
+	nom varchar(),
+	civilite char(),
+	date_de_naissance DATE
+);	
+	
+	SELECT* FROM acteur
+	
+------CREATE TABLE filme_acteurs(
+	film_id int REFERENCES films (film_id),
+	acteur_id int REFERENCES acteurs (acteur_id),
+	PRIMARY KEY (film_id , acteur_id)
+);	
+	SELECT* FROM filme_acteurs
+	
+************************************************************	pour modifier une table********************************************************
+
+	
+	ALTER TABLE exemples
+	ADD COLUMN email VARCHAR(50) UNIQUE
+	
+	* ALTER TABLE exemples
+	
+	ADD COLUMN nationalite VARCHAR(20),
+	ADD COLUMN age INT NOT NULL;
+	
+*********************************************** Modifier les type de donnees dans la colonnes************************************************
+
+	
+		ALTER TABLE exemples 
+		ALTER COLUMN nationalite TYPE CHAR(2)
+		
+		* SELECT* FROM exemple;
+		
+		ALTER TABLE exemples 
+		ALTER COLUMN nom TYPE VARCHAR(20),
+		ALTER COLUMN email TYPE VARCHAR(20);
+		
+		
+***********************************************************Supression de tables**************************************************************
+
+	DROP TABLE entrainement;
+	
+**********************************creation de la table et ajouter la colonne email et modifier le type de donnees****************************
+
+			
+	
+		CREATE TABLE conducteurs(
+		
+		id SERIAL PRIMARY KEY,
+		nom VARCHAR(),
+		prenom VARCHAR(),
+		departement INT,
+		date_permis DATE
+		
+		);
+		
+		SELECT * FROM conducteur;
+	
+	
+	-------CREATE TABLE voitures (
+		id SERIAL PRIMARY KEY,
+		marque VARCHAR(),
+		model VARCHAR(),
+		annee INT , 
+		conducteur_id INT REFERENCE conducteurs (id)
+	);
+		SELECT * FROM voiture;
+		
+***************************************************** ajoute de la colonnees ***************************************************************
+
+		ALTER TABLE conducteurs
+		ADD COLUMN email VARCHAR() UNIQUE;
+		
+		SELECT* FROM conducteurs;
+		 
+		ALTER TABLE conducteurs
+		ALTER COLUMN nom TYPE VARCHAR();
+		
+	
+-------- insertion de donnees dans une table
+
+		/**
+		INSERT INTO nom_la_table (colonne1, colonne2, colonne3)
+		VALUES ('valeur1','valeur1','valeur1'); **/
+		
+			
+		SELECT * FROM exemples;
+		
+		INSERT INTO exemples (prenom, nom ,eamil, nationalite, age) VALUES ('ALI','AHMAT','ALIO','ACHEICK','AFAF');
+		
+		
+		INSERT INTO exemples (prenom, nom ,eamil, nationalite, age) VALUES ('ALI','AHMAT','ALIO','ACHEICK@gmail.com','9'),
+		('ALI','AHMAT','ALIO','ACHEICK@gmail.com','8'),
+		('ALI','AHMAT','ALIO','ACHEICK@gmail.com','7');
+		
+	
+	
+****************************************************modfier des donnees dans une table***************************************************
+
+	/* UPDATE nom_table
+	   SET nom_ colonne = 'nouvelle_valeur'
+	   WHERE nom_colone = 'vleur'; */
+	   
+	   	UPDATE exemples 
+	   	SET nationalite = 'tchadienne'
+	   	WHERE exemple_id = 3;
+	   	
+	   	SELECT * FROM exemples;
+	   	
+		
+		
+		UPDATE exemples 
+	   	SET nationalite = 'tchadienne'
+	   	WHERE nationalit = malienne;
+		
+		
+		UPDATE exemples 
+	   	SET prenom = 'ALI',
+	   	age= 20
+	   	WHERE exemple_id = 3;
+	
+	
+************************************************** supression des donnees d'une table********************************************************
+		 /* UPDATE FROM nom_table 
+		 WHERE nom_colonne ='valeur'; */
+		 
+		 DELETE FROM exemples 
+		 WHERE exemple_id=3;
+		 
+		 SELECT * FROM exemple	
+		
+		
+		 DELETE FROM exemples 
+		 WHERE nationalite ='americaine';
+		 
+		 DELETE FROM conducteurs 
+		 WHERE nom = 'ALIO';
+	
+********************************************************* pour changer la date ************************************************************
+
+		SET Datestyle = 'sql, European';
+	
+	
+****************************************************** modifier l'annee de la ford mustang**************************************************
+
+
+		UPDATE voitures 
+		set annee = 2020
+		WHERE id = 4;
+
+
+
+******************************************Retrouver des données avec la condition WHERE*****************************************************
+
+	/*SELECT * FROM nom_table
+	 WHERE NOM_COLONNE= 'valeur'; */
+	 
+	 	SELECT *FROM FILMS
+	 	WHERE pays='tchad';
+
+
+		SELECT * FROM films
+		WHERE pays='tchad'
+		AND realisateur_id = 23;
+		
+
+		SELECT * FROM films
+		WHERE pays='tchad'
+		OR realisateur_id =4;
+
+
+
+		SELECT * FROM films
+		WHERE pays='COLOMBIE'
+		AND realisateur_id = 23;
+		AND duree= 160;
+		
+*****************Utilisation de opereteur logiques 
+
+
+		SELECT titre , duree FROM films
+		WHERE duree >120
+		
+		SELECT titre , duree FROM films
+		WHERE duree >=120
+		
+		SELECT titre , duree FROM films
+		WHERE duree <120
+		
+		SELECT titre , duree FROM films
+		WHERE duree <=120
+		
+		
+		SELECT* FROM films
+		WHERE date_de_sortie >'1990-12-23';
+		
+		
+		SELECT* FROM films
+		WHERE date_de_sortie >='1990-12-23';
+		
+		SELECT* FROM films
+		WHERE pays <'tchad';
+		
+		
+		SELECT* FROM films
+		WHERE pays <='tchad';
+	
+	
+************selectionner le titre et la date_de_sortie de tous les films**********
+
+		SELECT* FROM films; 
+		SELECT titre, date_de_sortie FROM films;
+		
+		
+********************************* selectionner le nom et le prenom de tous les realisateurs dont la nationalite est Tchadienne
+
+
+
+		SELECT prenom, nom FROM realisateurs
+		WHERE nationalité ='Tchadienne',
+			
+		
+		
+		SELECT* FROM acteurs;
+		WHERE civilite = 'F'
+		AND date_de_naissance > '1998-06-06';
+		
+		
+		SELECT * FROM films
+		WHERE duree>90
+		AND pays = 'Tchad';
+		
+***********************selectionner le element da le table par les nom et prenom************************************
+
+
+
+		SELECT prenom, nom  FROM acteur
+		WHERE prenom IN ('ali','mahamat');
+		
+		SELECT prenom, nom  FROM acteur
+		WHERE prenom= 'ali';
+		
+		SELECT prenom, nom  FROM acteur
+		WHERE prenom IN ('ali','mahamat','FATIME');
+		
+		
+		
+		SELECT prenom, nom  FROM acteur
+		WHERE prenom NOT IN ('ali','mahamat','FATIME');
+		
+		
+		
+		SELECT acteur_id, prenom, nom  FROM acteurs
+		WHERE acteurs_id IN ('2,1,8,8,5);
+		
+		
+		SELECT acteur_id, prenom, nom  FROM acteurs
+		WHERE acteurs_id NOT IN ('2,1,8,8,5);
+	
+	
+	
+********************************************Utilisation de LIKE avec % ou - ****************************************************************
+
+
+		SELECT* FROM acteurs
+		WHERE prenom LIKE 'P%'; 
+		
+		
+		
+		SELECT* FROM acteurs
+		WHERE prenom LIKE 'Pe_'; 
+		
+		
+		SELECT* FROM acteurs
+		WHERE prenom LIKE '%r'; 
+		
+		SELECT* FROM acteurs
+		WHERE prenom LIKE '%rl%'; 
+		
+		SELECT* FROM acteurs
+		WHERE prenom LIKE '_rl%'; 
+		
+		
+		SELECT* FROM acteurs
+		WHERE prenom LIKE '__rl_%';  
+		
+	
+	
+ *****************************************************Utilisation de BETWEEN**************************************************************
+ 
+	 
+	 	SELECT * FROM films
+	 	
+	 	SELECT TITRE, date_de_sortie FROM films 
+	 	WHERE date_de_sortie BETWEEN '1998-12-21' AND '1990-12-31';
+	 	
+	 	 	
+		SELEC titre, duree FROM films 
+		WHERE duree BETWEEN 70 AND 120;
+		
+		
+		SELEC titre, pays FROM films 
+		WHERE pays BETWEEN 'T' AND 'Pa';
+	
+*************************Utilisation de ORDER BY***************************
+
+		SELECT * FROM acteurs
+		SELECT nom, prenom, dare_de_naissance FROM acteurs
+		ORDER BY nom;
+	
+	
+	
+		SELECT nom, prenom, dare_de_naissance FROM acteurs
+		ORDER BY nom DESC ;
+		
+	
+		SELECT nom, prenom, dare_de_naissance FROM acteurs
+		ORDER BY nom ASC;
+	
+	
+	
+		SELECT acteurs_id nom, prenom, dare_de_naissance FROM acteurs
+		ORDER BY acteurs_id;
+	
+	
+		SELECT nom, prenom, dare_de_naissance FROM acteurs
+		ORDER BY date_de_naissance ASC;
+	
+	
+	
+	
+	
+		SELECT nom, prenom, dare_de_naissance FROM acteurs
+		ORDER BY date_de_naissance DESC;
+	
+	
+	
+	
+	
+		SELECT nom, prenom, dare_de_naissance FROM acteurs
+		WHERE civilite='F'
+		ORDER BY date_de_naissance ASC;
+	
+	
+	
+******************************************************** Utilisation de FETCH FIRST******************************************************	
+	
+	
+		SELECT *FROM films;
+		SELECT films_id, titre FROM films
+		FETCH FIRST 3 ROW ONLY;
+		
+		
+		
+		SELECT films_id, titre FROM films
+		OFFSET 8 ROWS
+		FETCH FIRST 23 ROW ONLY;
+	
+	
+************************************************************ Utilisation de DISTINCT*********************************************************
+
+
+			
+		SELECT *FROM films;
+		SELECT pays FROM films
+		ORDER BY pays;
+		
+
+		SELECT DISTINCT pays, realisateur_id FROM films
+		ORDER BY pays;
+		
+		
+		SELECT DISTINCT* FROM films
+		ORDER BY pays;
+	
+	
+	
+	
+	
+*****************************Selectionner les realisateurs tchadinne et de les trier du plus age au plus jeune*******************************
+
+
+		SELECT* FROM realisateurs 
+		WHERE nationalite ='tchadienne'
+		ORDER BY date_de_naissance;
+			
+		
+		SELECT DISTINCT nationalite FROM realisateurs;
+	
+************************* Selectionner les prenom, lesnols et les dates de naissance des 10 actrice lesplusjeunes****************************
+
+		SELECT nom, prenom, date_de_naissance FROM acteurs 
+		WHERE civilite= 'F'
+		ORDER BY date_de_naissance DESC
+		LIMIT 10;
+	
+	
+	
+**************************************************Utilisation la valeur nulles null**********************************************************
+	
+	
+		SELECT* FROM acteurs;
+		WHERE date_de_naissance IS NULL;
+		
+		
+		
+		SELECT* FROM acteurs;
+		WHERE date_de_naissance IS NOT NULL;
+		
+		
+
+
+***********************************************************Utilisation de ALIAS**************************************************************
+
+
+		SELECT * FROM realisateurs;
+		SELECT nom AS nom_de_famille FROM realisateurs;
+		
+		
+	
+	
+	
+		SELECT nom AS nom_de_famille FROM realisateurs;
+	
+		WHERE nom LIKE 'A%'
+		ORDER BY nom_de_famille;
+	
+	
+	
+*************************************************************la concatenation*************************************************************** 	
+	
+	
+*****************************************************SELECT 'string1' || 'string2' AS new_string;********************************************
+
+
+
+
+
+
+SELECT 'concat' || 'ensemble' AS new_string;
+
+ 
+SELECT 'concat' || ' ' || 'ensemble' AS new_string;
+
+
+
+SELECT CONCAT (nom, prenom) AS identite FROM acteurs;
+
+
+
+SELECT CONCAT (nom, ' ', prenom) AS identite FROM acteurs;	
+	
+	
+	
+SELECT CONCAT_WS (' ', nom, prenom) AS identite FROM acteurs;	
+	
+	
+	
+	
+SELECT CONCAT_WS ('- ', nom, prenom) AS identite FROM acteurs;		
+	
+	
+	
+------- Selectionner les acteurs dont le prenom est manquant ou la date de naissance
+
+
+
+	SELECT * FROM acteurs 
+	WHERE prenom IS NULL
+	OR date_de_naissance IS NULL	
+	
+	
+*************************************************************************************************************************
+
+
+
+	
+-- Drop the database if it exists before recreating it
+DROP DATABASE If EXISTS  global_buisness_db;
+
+CREATE DATABASE global_buisness_db DEFAULT CHARACTER SET = 'utf8mb4';
+
+use global_buisness_db;
+
+CREATE TABLE `customer` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `adress` varchar(45) NOT NULL,
+  `tel` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `employee` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `adresse` varchar(45) NOT NULL,
+  `tel` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL UNIQUE,
+  `poste` varchar(45) NOT NULL,
+  `salaire` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `supplier` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `adresse` VARCHAR(45) NOT NULL,
+  `tel` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `order` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `montant` int(11) NOT NULL,
+  `idCustomer` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `idCustomer` FOREIGN KEY (`idCustomer`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `purchasse` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `date` DATETIME NOT NULL,
+  `qtite` FLOAT NOT NULL,
+  `montant` FLOAT NOT NULL,
+  `idSupplier` INT(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT purch_supl FOREIGN KEY(idSupplier) REFERENCES `supplier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `product` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(45) NOT NULL,
+  `prix` INT(11) NOT NULL,
+  `qtite_en_stock` FLOAT NOT NULL,
+  `idPurchasse` INT(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT prod_purch FOREIGN KEY(idPurchasse) REFERENCES `purchasse` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `product_order`(
+id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+idProduct  INT(11) UNSIGNED NOT NULL,
+idOrder  INT(11) UNSIGNED NOT NULL,
+qtite FLOAT NOT NULL,
+PRIMARY KEY (`id`),
+CONSTRAINT product_order_prod FOREIGN KEY(idProduct) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT product_order_order FOREIGN KEY(idOrder) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Création de la table Student
+CREATE TABLE Student (
+  id INT PRIMARY KEY,
+  name VARCHAR(50),
+  email VARCHAR(100)
+);
+
+-- Création de la table Course
+CREATE TABLE Course (
+  id INT PRIMARY KEY,
+  name VARCHAR(100),
+  credits INT
+);
+
+-- Création de la table Enrollment
+CREATE TABLE Enrollment (
+  studentId INT,
+  courseId INT,
+  grade FLOAT,
+  FOREIGN KEY (studentId) REFERENCES Student(id),
+  FOREIGN KEY (courseId) REFERENCES Course(id)
+);
+
+
+
+
+
+
+
+
+
+CREATE TABLE Utilisateur (
+    id INT PRIMARY KEY,
+    nom VARCHAR(50),
+    email VARCHAR(100),
+    date_inscription DATE
+);
+
+
+
+
+
+-- Création de la table "Utilisateurs"
+CREATE TABLE Utilisateurs (
+    id INT PRIMARY KEY,
+    nom VARCHAR(50),
+    email VARCHAR(50)
+);
+
+-- Création de la table "Commandes"
+CREATE TABLE Commandes (
+    id INT PRIMARY KEY,
+    utilisateur_id INT,
+    date_commande DATE,
+    FOREIGN KEY (utilisateur_id) REFERENCES Utilisateurs(id)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
